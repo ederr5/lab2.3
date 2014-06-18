@@ -1,7 +1,111 @@
-@(message: String)
+@(tasks: List[Task], taskForm: Form[Task])
 
-@main("Welcome to Play") {
+@import helper._
 
-    @play20.welcome(message, style = "Java")
-
+@main("Lista de Prioridades") {
+    
+    <html lang="">
+    <head>
+        <!-- Bootstrap CSS -->
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    </head>
+    
+     <body>
+     
+     
+      <div class="col-sm-5">
+    <h2>Adicione uma nova Prioridade</h2>
+    
+    @form(routes.Application.newTask()) {
+        
+        @inputText(taskForm("label"), '_label -> <b>Tarefa:</b>)
+        @inputText(taskForm("priority"), '_label -> <b>Prioridade:</b>)
+        @inputText(taskForm("week"), '_label -> <b>Semana:</b>)
+        
+        <input type="submit" value="Adicionar">
+        
+    }
+    </div>
+    
+     
+     
+   
+   
+   <h2 class="text-center">@tasks.size() Atividades(s)</h2>
+   
+   
+   
+   
+     <div class="col-sm-5">
+                <table class="table table-hover">
+                <h2>- Atividades Não Feitas:</h2>
+                    <thead>
+                        <tr>
+	                        <th>Descrição </th>
+	                        <th>Prioridade </th>
+	                        <th>Semana </th>
+	                        <th>Ação</th>
+	                    </tr>
+                    </thead>
+                    <tbody>
+       				  @for(task <- tasks) {
+	            		   @if(!task.isDone()){
+	            		  	<tr>
+					             <th>@task.getLabel()<th>
+					   			 <th>@task.getPriority()<th>
+					             <th>@task.getWeek()<th>
+	
+	
+		              	<th> 
+		                @form(routes.Application.deleteTask(task.getId())) {
+		                    <input type="submit" value="Apagar">
+		                }
+	
+		                @form(routes.Application.updateTask(task.getId())) {
+		                    <input type="submit" value="Feita">
+		                }</th>
+		            }
+		        }
+		        </tbody>
+		    </div>
+   
+ 
+    
+    <div class="col-sm-5">
+                <table class="table table-hover">
+                <h2>- Atividades Feitas:</h2>
+                    <thead>
+                        <tr>
+	                        <th>Descrição </th>
+	                        <th>Prioridade </th>
+	                        <th>Semana </th>
+	                        <th>Ação</th>
+	                    </tr>
+                    </thead>
+                    <tbody> 
+			        @for(task <- tasks) {
+				            @if(task.isDone()){
+					            <tr>
+					             <th>@task.getLabel()<th>
+					   			 <th>@task.getPriority()<th>
+					             <th>@task.getWeek()<th>
+				
+				
+					            <th> 
+		                @form(routes.Application.deleteTask(task.getId())) {
+		                    <input type="submit" value="Apagar">
+		                }</th>
+				       }</tr>
+				     }			  
+   </div>
+   
+   
+   
+   
 }
+ <!-- jQuery -->
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    </body>
+</html>

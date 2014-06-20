@@ -8,41 +8,43 @@ import models.*;
 
 public class Application extends Controller {
 	
-	static Form<Task> taskForm = Form.form(Task.class);
+	static Form<Hackaton> hackatonForm = Form.form(Hackaton.class);
+	
 
 	public static Result index() {
-		  return redirect(routes.Application.tasks());
+		  return redirect(routes.Application.hackatons());
 		}
     
-	public static Result tasks() {
+	public static Result hackatons() {
 		  return ok(
-		    views.html.index.render(Task.all(), taskForm)
+		    views.html.index.render(Hackaton.all(), hackatonForm)
 		  );
 		}
       
-	public static Result newTask() {
-		  Form<Task> filledForm = taskForm.bindFromRequest();
+	public static Result newHackaton() {
+		  Form<Hackaton> filledForm = hackatonForm.bindFromRequest();
 		  if(filledForm.hasErrors()) {
 		    return badRequest(
-		      views.html.index.render(Task.all(), filledForm)
+		      views.html.index.render(Hackaton.all(), filledForm)
 		    );
 		  } else {
-		    Task.create(filledForm.get());
-		    return redirect(routes.Application.tasks());  
+		    Hackaton.create(filledForm.get());
+		    return redirect(routes.Application.hackatons());  
 		  }
 		}
+	
 
       
-	public static Result deleteTask(Long id) {
-		  Task.delete(id);
-		  return redirect(routes.Application.tasks());
+	public static Result deleteHackaton(Long id) {
+		  Hackaton.delete(id);
+		  return redirect(routes.Application.hackatons());
 		}
 	
 	
-	public static Result updateTask(Long id) {
-		Task.update(id);
-		return redirect(routes.Application.tasks());
+	public static Result updateHackaton(Long id) {
+		Hackaton.update(id);
+		return redirect(routes.Application.hackatons());
 	}
-
+	
 
 }

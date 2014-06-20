@@ -5,11 +5,12 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-# Tasks          
-GET     /tasks                  controllers.Application.tasks()
-POST    /tasks                  controllers.Application.newTask()
-POST    /tasks/:id/delete       controllers.Application.deleteTask(id: Long)
-POST    /tasks/:id/update       controllers.Application.updateTask(id: Long)
+# Hackatons          
+GET     /hackatons              controllers.Application.hackatons()
+POST    /hackatons              controllers.Application.newHackaton()
+POST    /hackatons/:id/delete   controllers.Application.deleteHackaton(id: Long)
+POST    /hackatons/:id/update   controllers.Application.updateHackaton(id: Long)
+#POST    /hackatons/:type/list   controllers.Application.listHackaton(type: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

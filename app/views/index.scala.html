@@ -1,8 +1,8 @@
-@(tasks: List[Task], taskForm: Form[Task])
+@(hackatons: List[Hackaton], hackatonForm: Form[Hackaton])
 
 @import helper._
 
-@main("Lista de Prioridades") {
+@main("Lista de HackFests") {
     
     <html lang="">
     <head>
@@ -13,91 +13,94 @@
      <body>
      
      
-      <div class="col-sm-5">
-    <h2>Adicione uma nova Prioridade</h2>
+     <div class="navbar navbar-inverse navbar-fixed-top">
+	 	<div class="container">
+	 		<div class="navbar-header">
+	 			<button type="button" class="navbar-toggle"
+					data-toggle="collapse" data-target=".navbar-collapse">
+			    </button>
+				<a class="navbar-brand" href="/">Hackathons</a>
+ 			</div>
+		  </div>
+		</div>
+			<br>
+			<br>   
+     		<br>
+     
+     
+     
+     
+     
+     
+     
+     <div class="container form-horizontal panel panel-default text-info" >
+    <h2>Adicione uma nova Hackfest</h2>
     
-    @form(routes.Application.newTask()) {
+    @form(routes.Application.newHackaton()) {
         
-        @inputText(taskForm("label"), '_label -> <b>Tarefa:</b>)
-        @inputText(taskForm("priority"), '_label -> <b>Prioridade:</b>)
-        @inputText(taskForm("week"), '_label -> <b>Semana:</b>)
-        
-        <input type="submit" value="Adicionar">
+        @inputText(hackatonForm("label"), '_label -> <b>Hackathon:</b>)
+        @inputText(hackatonForm("description"), '_label -> <b>Descrição:</b>)
+        @inputText(hackatonForm("date"), '_label -> <b>Data:</b>)
+   
+						       <select name="type">
+						         <option value="Tema pré-definido 1">Tema pré-definido 1</option>
+						       	 <option value="Tema pré-definido 2">Tema pré-definido 2</option>
+						         <option value="Tema pré-definido 3">Tema pré-definido 3</option>
+						       	 <option value="Tema pré-definido 4">Tema pré-definido 4</option>
+						         <option value="Tema pré-definido 5">Tema pré-definido 5</option>
+						         <option value="Tema pré-definido 6">Tema pré-definido 6</option>
+						         <input type="submit" class="btn btn-default" value="Inserir">
+						      </select>	
+						   </div>
+						</form>
+						
+					 
+					 
         
     }
-    </div>
-    
-     
-     
+                          
+     <h2 class="text-center">@hackatons.size() Hackathons(s)</h2>
    
    
-   <h2 class="text-center">@tasks.size() Atividades(s)</h2>
-   
-   
-   
-   
-     <div class="col-sm-5">
+     <div class="container form-horizontal panel panel-default text-info" >
                 <table class="table table-hover">
                 <h2>- Atividades Não Feitas:</h2>
+                <br>
                     <thead>
                         <tr>
+	                        <th>Hackaton </th>
 	                        <th>Descrição </th>
-	                        <th>Prioridade </th>
-	                        <th>Semana </th>
-	                        <th>Ação</th>
+	                        <th>Data </th>
+	                        <th>Tipo</th>
+	                        <th>Ação</th> 
 	                    </tr>
                     </thead>
                     <tbody>
-       				  @for(task <- tasks) {
-	            		   @if(!task.isDone()){
+       				  @for(hackaton <- hackatons) {
 	            		  	<tr>
-					             <th>@task.getLabel()<th>
-					   			 <th>@task.getPriority()<th>
-					             <th>@task.getWeek()<th>
-	
+					             <th>@hackaton.getLabel()</th>
+					   			 <th>@hackaton.getDescription()</th>
+					             <th>@hackaton.getDate()</th>
+	                             <th>@hackaton.getType()</th>
 	
 		              	<th> 
-		                @form(routes.Application.deleteTask(task.getId())) {
-		                    <input type="submit" value="Apagar">
+		                @form(routes.Application.deleteHackaton(hackaton.getId())) {
+		                    <input type="submit" class="btn btn-default" value="Apagar">
 		                }
-	
-		                @form(routes.Application.updateTask(task.getId())) {
-		                    <input type="submit" value="Feita">
-		                }</th>
+		                </th></tr>              
 		            }
-		        }
+		                   
 		        </tbody>
+		        </table>
 		    </div>
-   
+   		<footer>
+            <p>
+                <b>- by Eder Andrade©.</b>
+            </p>
+         </footer>
  
     
-    <div class="col-sm-5">
-                <table class="table table-hover">
-                <h2>- Atividades Feitas:</h2>
-                    <thead>
-                        <tr>
-	                        <th>Descrição </th>
-	                        <th>Prioridade </th>
-	                        <th>Semana </th>
-	                        <th>Ação</th>
-	                    </tr>
-                    </thead>
-                    <tbody> 
-			        @for(task <- tasks) {
-				            @if(task.isDone()){
-					            <tr>
-					             <th>@task.getLabel()<th>
-					   			 <th>@task.getPriority()<th>
-					             <th>@task.getWeek()<th>
-				
-				
-					            <th> 
-		                @form(routes.Application.deleteTask(task.getId())) {
-		                    <input type="submit" value="Apagar">
-		                }</th>
-				       }</tr>
-				     }			  
-   </div>
+
    
    
    
